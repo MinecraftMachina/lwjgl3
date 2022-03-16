@@ -41,6 +41,32 @@ If you'd like to contribute, see [doc/README](https://github.com/LWJGL/lwjgl3/tr
 for a quick overview of the project structure, installation instructions and
 configuration options.
 
+### Compilation
+
+#### Requirements
+
+- JDK 8 arm64
+- JDK 17 arm64
+- Ant
+- XCode/MacOS SDK
+
+#### Instructions
+
+```sh
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
+ant compile-templates
+ant generate
+# patch the generated code to no-op "nglfwSetWindowIcon", otherwise throws error on Minecraft 1.17 and before
+sed -i '' 's/invokePPV(window, count, images, __functionAddress);//' modules/lwjgl/glfw/src/generated/java/org/lwjgl/glfw/GLFW.java
+ant compile
+ant compile-native
+ant release
+mkdir FINAL && cd FINAL
+mv ../bin/RELEASE/**/*.jar* .
+rm *-natives-windows* *-natives-linux* *-macos.jar *-sources.jar *-javadoc.jar
+```
+
 ### Getting Started
 
 As of version `3.1.0`, LWJGL is distributed as a set of modules. Only the
