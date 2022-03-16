@@ -2333,7 +2333,7 @@ public class GLFW {
             check(window);
             if (images != NULL) { Struct.validate(images, count, GLFWImage.SIZEOF, GLFWImage::validate); }
         }
-        invokePPV(window, count, images, __functionAddress);
+        
     }
 
     /**
